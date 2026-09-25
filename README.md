@@ -54,49 +54,47 @@ Keep the codebase easy to extend and maintain.
 🧠 Mind Map
 
 mindmap
-  root((Project Hub Studio))
-    React Application
-      Header
-      Main Section
-        Left Right Workspace
-          Create Project
-          Project Place
-            Control Section
-            Not Found Section
-            Project Cards
-            Project Place
-          Left Right Aside
-        Project Summary
-      Footer
-    Styling
-      index.css
-    Entry
-      main.jsx
-      ProjectHub.jsx
-    Public Assets
-      assets
-      index.html
-    Configuration
-      eslint.config.js
-      .gitignore
-    Build
-      Vite
 
+  root((Project Hub Studio))
+    React Application 
+      Header 
+      Main Section 
+        Left Right Workspace 
+          Create Project 
+          Project Place 
+            Control Section 
+            Not Found Section 
+            Project Cards 
+            Project Place 
+          Left Right Aside 
+        Project Summary 
+      Footer 
+    Styling 
+      index.css 
+    Entry  
+      main.jsx 
+      ProjectHub.jsx 
+    Public Assets 
+      assets 
+      index.html 
+    Configuration 
+      eslint.config.js 
+      .gitignore 
+    Build 
+      Vite 
+ 
 📁 Folder Structure
 
 The following structure is based on the project structure shown in the development environment:
 
 Project Hub Studio/
-
 │
 ├── node_modules/
 │ 
-
 ├── public/
 │   ├── assets/
 │   └── index.html
 │
-
 ├── src/
 │   │ 
 │   ├── MainSection/
@@ -112,19 +110,16 @@ Project Hub Studio/
 │   │   │       ├── ProjectCards.jsx
 │   │   │       └── ProjectPlace.jsx
 │   │   │ 
-
 │   │   ├── LeftRightAside.jsx
 │   │   ├── ProjectSummary/
 │   │   └── MainSection.jsx
 │   │
-
 │   ├── Footer.jsx
 │   ├── Header.jsx
 │   ├── index.css
 │   ├── main.jsx
 │   └── ProjectHub.jsx
 │ 
-
 ├── .gitignore
 ├── eslint.config.js
 ├── package.json
