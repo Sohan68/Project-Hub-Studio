@@ -90,43 +90,43 @@ Project Hub Studio/
 
 │
 ├── node_modules/
-│
+│ 
 ├── public/
 │   ├── assets/
 │   └── index.html
-│
+│ 
 ├── src/
-│   │
+│   │ 
 │   ├── MainSection/
-│   │   │
+│   │   │ 
 │   │   ├── LeftRightWorkPla.../
-│   │   │   │
+│   │   │   │ 
 │   │   │   ├── CreateProject/
 │   │   │   │   └── CreateProject...jsx
-│   │   │   │
+│   │   │   │ 
 │   │   │   └── ProjectPlace/
 │   │   │       ├── ControlSection...jsx
 │   │   │       ├── NotFoundSecti...jsx
 │   │   │       ├── ProjectCards.jsx
 │   │   │       └── ProjectPlace.jsx
-│   │   │
+│   │   │ 
 │   │   ├── LeftRightAside.jsx
 │   │   ├── ProjectSummary/
 │   │   └── MainSection.jsx
-│   │
+│   │ 
 │   ├── Footer.jsx
 │   ├── Header.jsx
 │   ├── index.css
 │   ├── main.jsx
 │   └── ProjectHub.jsx
-│
+│ 
 ├── .gitignore
 ├── eslint.config.js
 ├── package.json
 ├── package-lock.json
 ├── vite.config.js
 └── README.md
-
+ 
 Note: Some filenames inside LeftRightWorkPla..., CreateProject..., ControlSection..., and NotFoundSecti... are truncated in the provided project-tree screenshot. Replace the ... entries above with their exact filenames from your local project if needed.
 
 🖼️ Preview / Demo
@@ -464,6 +464,7 @@ The project structure and UI may continue to evolve as new components, features,
 
 ⭐ Support: https://www.linkedin.com/in/sohantalukder68/
 
+👨‍💻 Author:
+Dev Sohan
+GitHub: https://github.com/Sohan68/
 If you find this project useful, consider giving the repository a ⭐ on GitHub.
-
-Made with ❤️ using React + Vite
