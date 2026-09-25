@@ -90,17 +90,13 @@ Project Hub Studio/
 
 │
 ├── node_modules/
-
 │
 ├── public/
-
 │   ├── assets/
 │   └── index.html
-
 │
 ├── src/
 │   │
-
 │   ├── MainSection/
 │   │   │
 │   │   ├── LeftRightWorkPla.../
