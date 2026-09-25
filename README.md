@@ -91,10 +91,12 @@ Project Hub Studio/
 │
 ├── node_modules/
 │ 
+
 ├── public/
 │   ├── assets/
 │   └── index.html
-│ 
+│
+
 ├── src/
 │   │ 
 │   ├── MainSection/
@@ -110,16 +112,19 @@ Project Hub Studio/
 │   │   │       ├── ProjectCards.jsx
 │   │   │       └── ProjectPlace.jsx
 │   │   │ 
+
 │   │   ├── LeftRightAside.jsx
 │   │   ├── ProjectSummary/
 │   │   └── MainSection.jsx
-│   │ 
+│   │
+
 │   ├── Footer.jsx
 │   ├── Header.jsx
 │   ├── index.css
 │   ├── main.jsx
 │   └── ProjectHub.jsx
 │ 
+
 ├── .gitignore
 ├── eslint.config.js
 ├── package.json
