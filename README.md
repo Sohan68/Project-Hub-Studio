@@ -134,7 +134,7 @@ Live Demo
 
 Add your deployed Vercel URL here:
 
-Live Demo: https://your-project.vercel.app
+Live Demo: [https://your-project.vercel.app](https://project-hub-studio.vercel.app/)
 
 Project Screenshot
 
