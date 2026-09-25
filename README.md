@@ -87,15 +87,20 @@ mindmap
 The following structure is based on the project structure shown in the development environment:
 
 Project Hub Studio/
+
 │
 ├── node_modules/
+
 │
 ├── public/
+
 │   ├── assets/
 │   └── index.html
+
 │
 ├── src/
 │   │
+
 │   ├── MainSection/
 │   │   │
 │   │   ├── LeftRightWorkPla.../
