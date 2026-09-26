@@ -1,37 +1,98 @@
-const CreateProject = () => {
+import { useState } from "react";
+
+const CreateProject = ({ onAddProject }) => {
+  const [project, setProject] = useState({
+    id: crypto.randomUUID(),
+    projectName: "",
+    clientName: "",
+    projectUrl: "",
+    displayUrl: "",
+    category: "Web Development",
+    status: "Pending",
+    isFavorite: false,
+    quantity: 1,
+    budget: "",
+  });
+  const [errors, setErrors] = useState({
+    projectName: false,
+    clientName: false,
+    projectUrl: false,
+    budget: false,
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    let value = e.target.value;
+    let updatedProject = {
+      ...project,
+      [name]: value,
+    };
+    if (name === "projectUrl") {
+      updatedProject.displayUrl = value.replace(/^https?:\/\//, "");
+    }
+    setProject(updatedProject);
+
+    if (value.trim() !== "") {
+      setErrors({
+        ...errors,
+        [name]: false,
+      });
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {
+      projectName: project.projectName.trim() === "",
+      clientName: project.clientName.trim() === "",
+      projectUrl: project.projectUrl.trim() === "",
+      budget: String(project.budget).trim() === "",
+    };
+    setErrors(newErrors);
+    if (Object.values(newErrors).includes(true)) {
+      return;
+    }
+    onAddProject(project);
+
+    setErrors({
+      projectName: false,
+      clientName: false,
+      projectUrl: false,
+      budget: false,
+    });
+  };
+
   return (
     <>
       <aside className="lg:col-span-4 w-full lg:sticky lg:top-20">
         <div className="bg-[#121215] border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-          {/* Form Header */}
+          {/* htmlForm Header */}
           <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 <h3
-                  id="formTitle"
+                  id="htmlFormTitle"
                   className="text-sm sm:text-base font-bold text-white uppercase tracking-tight"
                 >
                   Create Project
                 </h3>
               </div>
-              <p id="formSubtitle" className="text-xs text-zinc-400 mt-0.5">
+              <p id="htmlFormSubtitle" className="text-xs text-zinc-400 mt-0.5">
                 Enter details to add a new project
               </p>
             </div>
 
             <span
-              id="formModeBadge"
+              id="htmlFormModeBadge"
               className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700"
             >
               New Entry
             </span>
           </div>
-
-          {/*  Form Fields  */}
+          {/*  htmlForm Fields  */}
           <form
-            id="projectForm"
-            onsubmit="handleFormSubmit(event)"
+            id="projecthtmlForm"
+            onSubmit={handleSubmit}
             className="space-y-3.5 sm:space-y-4"
           >
             <input type="hidden" id="editProjectId" value="" />
@@ -39,7 +100,7 @@ const CreateProject = () => {
             {/* 1. Project Name */}
             <div>
               <label
-                for="projectName"
+                htmlFor="projectName"
                 className="block text-xs font-medium text-zinc-300 mb-1"
               >
                 Project Name <span className="text-rose-400">*</span>
@@ -47,13 +108,15 @@ const CreateProject = () => {
               <input
                 type="text"
                 id="projectName"
+                name="projectName"
                 placeholder="e.g. NextGen SaaS Dashboard"
                 className="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-                required
+                value={project.projectName}
+                onChange={handleChange}
               />
               <p
                 id="errorProjectName"
-                className="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                className={`${errors.projectName ? "flex" : "hidden"} text-[11px] text-rose-400 mt-1 items-center gap-1`}
               >
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
@@ -68,14 +131,14 @@ const CreateProject = () => {
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-                <span>Project name is required.</span>
+                <span>Project name is required .</span>
               </p>
             </div>
 
             {/* 2. Client Name */}
             <div>
               <label
-                for="clientName"
+                htmlFor="clientName"
                 className="block text-xs font-medium text-zinc-300 mb-1"
               >
                 Client Name <span className="text-rose-400">*</span>
@@ -83,13 +146,15 @@ const CreateProject = () => {
               <input
                 type="text"
                 id="clientName"
+                name="clientName"
                 placeholder="e.g. Acme Global Tech"
                 className="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-                required
+                value={project.clientName}
+                onChange={handleChange}
               />
               <p
                 id="errorClientName"
-                className="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                className={`${errors.clientName ? "flex" : "hidden"} text-[11px] text-rose-400 mt-1  items-center gap-1`}
               >
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
@@ -104,14 +169,14 @@ const CreateProject = () => {
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-                <span>Client name is required.</span>
+                <span>Client name is required .</span>
               </p>
             </div>
 
             {/*  3. Project URL */}
             <div>
               <label
-                for="projectUrl"
+                htmlFor="projectUrl"
                 className="block text-xs font-medium text-zinc-300 mb-1"
               >
                 Project URL <span className="text-rose-400">*</span>
@@ -119,13 +184,15 @@ const CreateProject = () => {
               <input
                 type="url"
                 id="projectUrl"
+                name="projectUrl"
                 placeholder="https://client-project.com"
                 className="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
-                required
+                value={project.projectUrl}
+                onChange={handleChange}
               />
               <p
                 id="errorProjectUrl"
-                className="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                className={`${errors.projectUrl ? "flex" : "hidden"} text-[11px] text-rose-400 mt-1  items-center gap-1`}
               >
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
@@ -147,7 +214,7 @@ const CreateProject = () => {
             {/*  4. Category  */}
             <div>
               <label
-                for="category"
+                htmlFor="category"
                 className="block text-xs font-medium text-zinc-300 mb-1"
               >
                 Category <span className="text-rose-400">*</span>
@@ -155,13 +222,17 @@ const CreateProject = () => {
               <div className="relative">
                 <select
                   id="category"
+                  name="category"
                   className="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all appearance-none cursor-pointer"
-                  required
+                  value={project.category}
+                  onChange={handleChange}
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled>
                     Select category...
                   </option>
-                  <option value="Web Development">Web Development</option>
+                  <option selected value="Web Development">
+                    Web Development
+                  </option>
                   <option value="Mobile App">Mobile App</option>
                   <option value="UI/UX Design">UI/UX Design</option>
                   <option value="Cloud / DevOps">Cloud / DevOps</option>
@@ -186,7 +257,7 @@ const CreateProject = () => {
               </div>
               <p
                 id="errorCategory"
-                className="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                className={`${errors.category ? "flex" : "hidden"} text-[11px] text-rose-400 mt-1  items-center gap-1`}
               >
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
@@ -208,7 +279,7 @@ const CreateProject = () => {
             {/* 5. Budget */}
             <div>
               <label
-                for="budget"
+                htmlFor="budget"
                 className="block text-xs font-medium text-zinc-300 mb-1"
               >
                 Unit Budget ($ USD) <span className="text-rose-400">*</span>
@@ -220,15 +291,17 @@ const CreateProject = () => {
                 <input
                   type="number"
                   id="budget"
+                  name="budget"
                   step="any"
                   placeholder="5000"
                   className="w-full pl-7 pr-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
-                  required
+                  value={project.budget}
+                  onChange={handleChange}
                 />
               </div>
               <p
                 id="errorBudget"
-                className="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                className={`${errors.budget ? "flex" : "hidden"} text-[11px] text-rose-400 mt-1  items-center gap-1`}
               >
                 <svg
                   className="w-3.5 h-3.5 shrink-0"
@@ -272,7 +345,7 @@ const CreateProject = () => {
 
               <button
                 type="button"
-                onclick="clearForm()"
+                onClick="clearhtmlForm()"
                 id="clearBtn"
                 className="px-3.5 py-2 sm:py-2.5 text-xs font-medium rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-pointer"
               >
@@ -284,7 +357,7 @@ const CreateProject = () => {
             <button
               type="button"
               id="cancelEditBtn"
-              onclick="cancelEditMode()"
+              onClick="cancelEditMode()"
               className="hidden w-full text-center text-xs text-zinc-400 hover:text-zinc-200 py-1 transition-colors"
             >
               Cancel Edit Mode
