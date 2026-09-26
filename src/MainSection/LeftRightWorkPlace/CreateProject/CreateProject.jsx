@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const CreateProject = ({ onAddProject }) => {
-  const [project, setProject] = useState({
+const CreateProject = ({ onAddProject, projectToUpdate }) => {
+  const initialFormState = {
     id: crypto.randomUUID(),
     projectName: "",
     clientName: "",
@@ -12,13 +12,16 @@ const CreateProject = ({ onAddProject }) => {
     isFavorite: false,
     quantity: 1,
     budget: "",
-  });
-  const [errors, setErrors] = useState({
+  };
+  const [project, setProject] = useState(projectToUpdate || initialFormState);
+  const initialError = {
     projectName: false,
     clientName: false,
     projectUrl: false,
     budget: false,
-  });
+  };
+  const [errors, setErrors] = useState(initialError);
+  const [isAdd, setIsAdd] = useState(Object.is(projectToUpdate, null));
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -45,22 +48,21 @@ const CreateProject = ({ onAddProject }) => {
       projectName: project.projectName.trim() === "",
       clientName: project.clientName.trim() === "",
       projectUrl: project.projectUrl.trim() === "",
-      budget: String(project.budget).trim() === "",
+      budget: project.budget.trim() === "",
     };
     setErrors(newErrors);
     if (Object.values(newErrors).includes(true)) {
       return;
     }
-    onAddProject(project);
-
-    setErrors({
-      projectName: false,
-      clientName: false,
-      projectUrl: false,
-      budget: false,
-    });
+    onAddProject(project, isAdd);
+    setProject(initialFormState);
+    setErrors(initialError);
   };
-
+  const handleClear = () => {
+    setIsAdd(true);
+    setProject(initialFormState);
+    setErrors(initialError);
+  };
   return (
     <>
       <aside className="lg:col-span-4 w-full lg:sticky lg:top-20">
@@ -74,19 +76,31 @@ const CreateProject = ({ onAddProject }) => {
                   id="htmlFormTitle"
                   className="text-sm sm:text-base font-bold text-white uppercase tracking-tight"
                 >
-                  Create Project
+                  {isAdd ? "Create Project" : "Edit Project"}
                 </h3>
               </div>
-              <p id="htmlFormSubtitle" className="text-xs text-zinc-400 mt-0.5">
-                Enter details to add a new project
-              </p>
+              {isAdd ? (
+                <p
+                  id="htmlFormSubtitle"
+                  className="text-xs text-zinc-400 mt-0.5"
+                >
+                  Enter details to add a new project
+                </p>
+              ) : (
+                <p
+                  id="htmlFormSubtitle"
+                  className="text-xs text-zinc-400 mt-0.5"
+                >
+                  Enter details for Edit this project
+                </p>
+              )}
             </div>
 
             <span
               id="htmlFormModeBadge"
               className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700"
             >
-              New Entry
+              {isAdd ? "New Entry" : "Edit Mode"}
             </span>
           </div>
           {/*  htmlForm Fields  */}
@@ -125,9 +139,9 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -163,9 +177,9 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -201,9 +215,9 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -230,9 +244,7 @@ const CreateProject = ({ onAddProject }) => {
                   <option value="" disabled>
                     Select category...
                   </option>
-                  <option selected value="Web Development">
-                    Web Development
-                  </option>
+                  <option value="Web Development">Web Development</option>
                   <option value="Mobile App">Mobile App</option>
                   <option value="UI/UX Design">UI/UX Design</option>
                   <option value="Cloud / DevOps">Cloud / DevOps</option>
@@ -247,9 +259,9 @@ const CreateProject = ({ onAddProject }) => {
                     viewBox="0 0 24 24"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M19 9l-7 7-7-7"
                     ></path>
                   </svg>
@@ -266,9 +278,9 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -310,9 +322,9 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
@@ -334,34 +346,36 @@ const CreateProject = ({ onAddProject }) => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.5"
                     d="M12 4v16m8-8H4"
                   ></path>
                 </svg>
-                <span id="submitBtnText">Add Project</span>
+                <span id="submitBtnText">
+                  {isAdd ? "Add Project" : " Edit Project"}
+                </span>
               </button>
-
-              <button
-                type="button"
-                onClick="clearhtmlForm()"
-                id="clearBtn"
-                className="px-3.5 py-2 sm:py-2.5 text-xs font-medium rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-pointer"
-              >
-                Clear
-              </button>
+              {isAdd ? (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  id="clearBtn"
+                  className="px-3.5 py-2 sm:py-2.5 text-xs font-medium rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-pointer"
+                >
+                  Clear
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  id="cancelEditBtn"
+                  onClick={handleClear}
+                  className=" text-center text-xs text-zinc-400 hover:text-zinc-200 py-1 transition-colors"
+                >
+                  Cancel Edit Mode
+                </button>
+              )}
             </div>
-
-            {/* Cancel Edit Mode Button  */}
-            <button
-              type="button"
-              id="cancelEditBtn"
-              onClick="cancelEditMode()"
-              className="hidden w-full text-center text-xs text-zinc-400 hover:text-zinc-200 py-1 transition-colors"
-            >
-              Cancel Edit Mode
-            </button>
           </form>
         </div>
       </aside>

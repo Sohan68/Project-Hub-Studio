@@ -55,17 +55,58 @@ const MainSection = () => {
     },
   ];
   const [projects, setProjects] = useState(initialProject);
-  const handleAddProject = (newProject) => {
-    setProjects([newProject, ...projects]);
+  const [projectToUpdate, setProjectToUpdate] = useState(null);
+
+  const handleAddProject = (newProject, isAdd) => {
+    if (isAdd) {
+      setProjects([newProject, ...projects]);
+    } else {
+      setProjects(
+        projects.map((projct) => {
+          if (projct.id === newProject.id) {
+            return newProject;
+          }
+          return projct;
+        }),
+      );
+    }
+    setProjectToUpdate(null);
+  };
+  const handleEditProject = (prjct) => {
+    // console.log(prjct);
+    setProjectToUpdate(prjct);
+  };
+  const handleFavorite = (ProjectId) => {
+    const ProjectIndex = projects.findIndex(
+      (Project) => Project.id === ProjectId,
+    );
+    const newProjects = [...projects];
+    newProjects[ProjectIndex].isFavorite =
+      !newProjects[ProjectIndex].isFavorite;
+    setProjects(newProjects);
+  };
+  const handleDelete = (projectId) => {
+    const noDltProject = projects.filter((prjctd) => prjctd.id !== projectId);
+    setProjects(noDltProject);
   };
   return (
     <>
-      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
         <ProjectSummury />
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          <CreateProject onAddProject={handleAddProject} />
-          <ProjectPlace projects={projects} />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+          <CreateProject
+            key={projectToUpdate ? projectToUpdate.id : " "}
+            onAddProject={handleAddProject}
+            projectToUpdate={projectToUpdate}
+          />
+
+          <ProjectPlace
+            projects={projects}
+            onEditProject={handleEditProject}
+            onFavorite={handleFavorite}
+            onDelete={handleDelete}
+          />
         </div>
       </main>
     </>
