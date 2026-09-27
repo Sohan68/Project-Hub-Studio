@@ -66,7 +66,6 @@ mindmap
             Not Found Section 
             Project Cards 
             Project Place 
-          Left Right Aside 
         Project Summary 
       Footer 
     Styling 
