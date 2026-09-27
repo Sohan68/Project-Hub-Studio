@@ -1,21 +1,22 @@
-import { useState } from "react";
-const ControlSection = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const handleClick = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-  };
+const ControlSection = ({
+  filters,
+  onFilterChange,
+  onResetFilters,
+  displayedCount,
+  totalCount,
+}) => {
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   onSearch(searchTerm);
+  // };
   return (
     <>
       <div className="bg-[#121215] border border-zinc-800 rounded-2xl p-4 space-y-3 shadow-sm">
         {/* Search Bar & Count  */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
           <div className="relative flex-1">
-            <button
-              type="submit"
-              onClick={handleClick}
-              className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-500"
-            >
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-500">
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -29,35 +30,36 @@ const ControlSection = ({ onSearch }) => {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 ></path>
               </svg>
-            </button>
+            </span>
             <input
               type="text"
               id="searchProjects"
               placeholder="Search by project name or domain..."
               className="w-full pl-9 pr-8 py-2 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-              // onInput="handleSearch(this.value)"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={filters.searchTerm}
+              onChange={(e) => onFilterChange("searchTerm", e.target.value)}
             />
-            <button
-              id="clearSearchBtn"
-              // onClick="clearSearchInput()"
-              className="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-zinc-300"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {filters.searchTerm && (
+              <button
+                id="clearSearchBtn"
+                onClick={() => onFilterChange("searchTerm", "")}
+                className=" absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-zinc-300"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            )}
           </div>
 
           <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
@@ -66,7 +68,7 @@ const ControlSection = ({ onSearch }) => {
               id="displayedCount"
               className="text-xs font-bold font-mono-code px-2.5 py-1 bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-lg"
             >
-              4 of 4
+              {displayedCount} of {totalCount}
             </span>
           </div>
         </div>
@@ -84,7 +86,8 @@ const ControlSection = ({ onSearch }) => {
             <div className="relative">
               <select
                 id="filterCategory"
-                onChange="applyFilters()"
+                value={filters.category}
+                onChange={(e) => onFilterChange("category", e.target.value)}
                 className="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
               >
                 <option value="ALL">All Categories</option>
@@ -124,7 +127,8 @@ const ControlSection = ({ onSearch }) => {
             <div className="relative">
               <select
                 id="filterStatus"
-                onChange="applyFilters()"
+                value={filters.status}
+                onChange={(e) => onFilterChange("status", e.target.value)}
                 className="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
               >
                 <option value="ALL">All Status</option>
@@ -160,7 +164,8 @@ const ControlSection = ({ onSearch }) => {
             <div className="relative">
               <select
                 id="sortBy"
-                onChange="applyFilters()"
+                value={filters.sort}
+                onChange={(e) => onFilterChange("sort", e.target.value)}
                 className="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
               >
                 <option value="default">Default</option>
@@ -191,13 +196,17 @@ const ControlSection = ({ onSearch }) => {
           <div className="flex items-end gap-1.5">
             <button
               id="filterFavoriteBtn"
-              onClick="toggleFavoriteFilter()"
-              className="flex-1 py-1.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-amber-400 text-xs font-medium inline-flex items-center justify-center gap-1 transition-all cursor-pointer"
               title="Filter Starred"
+              onClick={() => onFilterChange("isFavorite", !filters.isFavorite)}
+              className={`flex-1 py-1.5 px-2 rounded-xl border text-xs font-medium inline-flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                filters.isFavorite
+                  ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
+                  : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-amber-400 hover:bg-zinc-900"
+              }`}
             >
               <svg
                 id="filterStarIcon"
-                className="w-3.5 h-3.5 text-zinc-500"
+                className={`${filters.isFavorite ? "fill-amber-400" : "fill-white "} w-3.5 h-3.5`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -213,7 +222,7 @@ const ControlSection = ({ onSearch }) => {
             </button>
 
             <button
-              onClick="resetAllFilters()"
+              onClick={onResetFilters}
               className="py-1.5 px-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white text-xs font-medium transition-all cursor-pointer"
               title="Reset Filters"
             >
