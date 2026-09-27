@@ -89,16 +89,36 @@ const MainSection = () => {
     const noDltProject = projects.filter((prjctd) => prjctd.id !== projectId);
     setProjects(noDltProject);
   };
+  const handleAddQuantity = (projectId) => {
+    const updatedProjects = projects.map((project) => {
+      if (project.id === projectId) {
+        return { ...project, quantity: project.quantity + 1 };
+      }
+      return project;
+    });
+    setProjects(updatedProjects);
+  };
+  const handleSubQuantity = (projectId) => {
+    const updatedProjects = projects.map((project) => {
+      if (project.id === projectId && project.quantity > 1) {
+        return { ...project, quantity: project.quantity - 1 };
+      }
+      return project;
+    });
+    setProjects(updatedProjects);
+  };
+
   return (
     <>
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
-        <ProjectSummury />
+        <ProjectSummury projects={projects} />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           <CreateProject
             key={projectToUpdate ? projectToUpdate.id : " "}
             onAddProject={handleAddProject}
             projectToUpdate={projectToUpdate}
+            onCancelEdit={() => setProjectToUpdate(null)}
           />
 
           <ProjectPlace
@@ -106,6 +126,8 @@ const MainSection = () => {
             onEditProject={handleEditProject}
             onFavorite={handleFavorite}
             onDelete={handleDelete}
+            onAddQuantity={handleAddQuantity}
+            onSubQuantity={handleSubQuantity}
           />
         </div>
       </main>

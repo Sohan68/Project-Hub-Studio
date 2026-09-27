@@ -1,4 +1,14 @@
-const ProjectSummury = () => {
+const ProjectSummury = ({ projects }) => {
+  const totalProjects = projects.length;
+  const pendingProjects = projects.filter(
+    (project) => project.status === "Pending",
+  ).length;
+  const completedProjects = projects.filter(
+    (project) => project.status === "Completed",
+  ).length;
+  const totalBudget = projects.reduce((acc, curr) => {
+    return acc + curr.budget * curr.quantity;
+  }, 0);
   return (
     <>
       <section
@@ -49,7 +59,7 @@ const ProjectSummury = () => {
                 id="summaryTotalProjects"
                 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code"
               >
-                4
+                {totalProjects}
               </span>
               <span className="text-[11px] text-zinc-500 font-medium">
                 projects
@@ -82,7 +92,7 @@ const ProjectSummury = () => {
                 id="summaryPendingProjects"
                 className="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight font-mono-code"
               >
-                2
+                {pendingProjects}
               </span>
               <span className="text-[11px] text-zinc-500 font-medium">
                 in queue
@@ -117,7 +127,7 @@ const ProjectSummury = () => {
                 id="summaryCompletedProjects"
                 className="text-2xl sm:text-3xl font-extrabold text-emerald-400 tracking-tight font-mono-code"
               >
-                2
+                {completedProjects}
               </span>
               <span className="text-[11px] text-zinc-500 font-medium">
                 delivered
@@ -152,7 +162,7 @@ const ProjectSummury = () => {
                 id="summaryTotalBudget"
                 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code"
               >
-                $118,500
+                ${totalBudget}
               </span>
               <span className="text-[11px] text-zinc-500 font-medium">USD</span>
             </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CreateProject = ({ onAddProject, projectToUpdate }) => {
+const CreateProject = ({ onAddProject, projectToUpdate, onCancelEdit }) => {
   const initialFormState = {
     id: crypto.randomUUID(),
     projectName: "",
@@ -48,7 +48,7 @@ const CreateProject = ({ onAddProject, projectToUpdate }) => {
       projectName: project.projectName.trim() === "",
       clientName: project.clientName.trim() === "",
       projectUrl: project.projectUrl.trim() === "",
-      budget: project.budget.trim() === "",
+      budget: String(project.budget).trim() === "",
     };
     setErrors(newErrors);
     if (Object.values(newErrors).includes(true)) {
@@ -62,6 +62,9 @@ const CreateProject = ({ onAddProject, projectToUpdate }) => {
     setIsAdd(true);
     setProject(initialFormState);
     setErrors(initialError);
+    if (onCancelEdit) {
+      onCancelEdit();
+    }
   };
   return (
     <>

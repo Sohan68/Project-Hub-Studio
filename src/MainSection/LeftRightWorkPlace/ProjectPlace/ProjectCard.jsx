@@ -1,4 +1,11 @@
-const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
+const ProjectCard = ({
+  projects,
+  onEditProject,
+  onFavorite,
+  onDelete,
+  onAddQuantity,
+  onSubQuantity,
+}) => {
   return (
     <div id="projectsGrid" className="space-y-3.5 sm:space-y-4">
       {projects.map((card) => (
@@ -94,7 +101,6 @@ const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
               </button>
             </div>
           </div>
-
           {/* Middle Card Row: Project Title & Client & URL  */}
           <div className="space-y-1 mb-3.5">
             <h4 className="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors">
@@ -138,7 +144,7 @@ const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
               <span className="text-[11px] text-zinc-400">Qty:</span>
               <div className="flex items-center gap-1">
                 <button
-                  // onClick={() => changeQuantity(card.id)}
+                  onClick={() => onSubQuantity(card.id)}
                   className="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
                 >
                   -
@@ -147,7 +153,7 @@ const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
                   {card.quantity}
                 </span>
                 <button
-                  // onClick={() => changeQuantity(card.id)}
+                  onClick={() => onAddQuantity(card.id)}
                   className="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
                 >
                   +
@@ -158,7 +164,7 @@ const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
             {/*  Budget Calculations  */}
             <div className="text-right">
               <div className="text-[10px] text-zinc-500 font-mono-code">
-                {card.budget} ×{card.quantity}
+                {card.budget} × {card.quantity}
               </div>
               <div className="text-xs sm:text-sm font-bold text-emerald-400 font-mono-code total-card-budget">
                 ${(card.budget * card.quantity).toLocaleString()}
@@ -215,4 +221,4 @@ const Project = ({ projects, onEditProject, onFavorite, onDelete }) => {
   );
 };
 
-export default Project;
+export default ProjectCard;
