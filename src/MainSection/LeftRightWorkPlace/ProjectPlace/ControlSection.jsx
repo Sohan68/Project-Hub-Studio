@@ -5,11 +5,6 @@ const ControlSection = ({
   displayedCount,
   totalCount,
 }) => {
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   onSearch(searchTerm);
-  // };
   return (
     <>
       <div className="bg-[#121215] border border-zinc-800 rounded-2xl p-4 space-y-3 shadow-sm">

@@ -78,7 +78,6 @@ const ProjectPlace = ({
         {filteredProjects.length > 0 ? (
           <ProjectCard
             projects={filteredProjects}
-            projects={projects}
             onEditProject={onEditProject}
             onFavorite={onFavorite}
             onDelete={onDelete}
