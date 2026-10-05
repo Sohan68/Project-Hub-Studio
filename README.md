@@ -535,66 +535,7 @@ Maintain a responsive and user-friendly layout.
 Keep the codebase easy to extend and maintain.
 🧠 Mind Map
 
-📁 Folder Structure
-The following structure is based on the project structure shown in the development environment:
 
-Project Hub Studio/
-│
-├── node_modules/
-│
-├── public/
-│   ├── assets/
-│   └── index.html
-│
-├── src/
-│   │
-│   ├── MainSection/
-│   │   │
-│   │   ├── LeftRightWorkPla.../
-│   │   │   │
-│   │   │   ├── CreateProject/
-│   │   │   │   └── CreateProject...jsx
-│   │   │   │
-│   │   │   └── ProjectPlace/
-│   │   │       ├── ControlSection...jsx
-│   │   │       ├── NotFoundSecti...jsx
-│   │   │       ├── ProjectCards.jsx
-│   │   │       └── ProjectPlace.jsx
-│   │   │
-│   │   ├── LeftRightAside.jsx
-│   │   ├── ProjectSummary/
-│   │   └── MainSection.jsx
-│   │
-│   ├── Footer.jsx
-│   ├── Header.jsx
-│   ├── index.css
-│   ├── main.jsx
-│   └── ProjectHub.jsx
-│
-├── .gitignore
-├── eslint.config.js
-├── package.json
-├── package-lock.json
-├── vite.config.js
-└── README.md
-Note: Some filenames inside LeftRightWorkPla..., CreateProject..., ControlSection..., and NotFoundSecti... are truncated in the provided project-tree screenshot. Replace the ... entries above with their exact filenames from your local project if needed.
-
-Main Directory Responsibilities
-Directory / File	Purpose
-public/	Static public assets
-public/assets/	Images and other static assets
-src/	Main React source code
-src/MainSection/	Main application content
-CreateProject/	Project creation-related UI
-ProjectPlace/	Project display and project-state UI
-ProjectSummary/	Project summary-related components
-Header.jsx	Application header
-Footer.jsx	Application footer
-ProjectHub.jsx	Main Project Hub component
-main.jsx	React application entry point
-index.css	Global styling
-eslint.config.js	ESLint configuration
-vite.config.js	Vite configuration
 🖼️ Preview / Demo
 Live Demo
 Add your deployed Vercel URL here:
